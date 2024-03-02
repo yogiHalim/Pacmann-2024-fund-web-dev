@@ -1,0 +1,162 @@
+
+<html>
+<head>
+    
+</head>
+<body>
+   <nav class="border">
+    Website Portfolio
+   </nav>
+   <section class="pad0">
+    <div class="grid pad0">
+        <div class="border center">IMG</div><div class="left border">Hi Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam, expedita, ut qui laborum fugiat dolores natus, non quos eaque temporibus accusamus sapiente? Perferendis rem ad maiores ab doloribus earum deserunt.</div>
+    </div>
+   </section>
+   <section id="IDskillbx" class="border">
+    Skill
+    <div class="skillbx">
+        <div ><div >IMG</div><div >Python</div></div>
+        <div ><div >IMG</div><div >HTML&CSS</div></div>
+        <div ><div >IMG</div><div >UI/UX</div></div>
+  
+        <div ><div >IMG</div><div >JavaScript</div></div>
+        <div ><div >IMG</div><div >Photoshop</div></div>
+        <div ><div >IMG</div><div >R</div></div>
+
+        <div ><div >IMG</div><div >PHP</div></div>
+        <div ><div >IMG</div><div >C/C++</div></div>
+    </div>
+   </section>
+   <section id="IDprojectbx" class="border">
+    Project
+    <div>
+        <div>
+            <div>IMG</div><div>Kasir Sederhana</div>
+        </div>
+        <div>
+            <div>IMG</div><div>Kalkulator Sederhana</div>
+        </div>
+        <div>
+            <div>IMG</div><div>Kalkulator Ganjil Genap</div>
+        </div>
+        <div>
+            <div>IMG</div><div>Website Landing Page</div>
+        </div>
+        <div>
+            <div>IMG</div><div>Website Resume Sederhana</div>
+        </div>
+        <div>
+            <div>IMG</div><div>Algoritma K-means</div>
+        </div>
+        <div>
+            <div>IMG</div><div>Algoritma KNN</div>
+        </div>
+        <div>
+            <div>IMG</div><div>Algoritma ANN</div>
+        </div>
+    </div>
+   </section>
+   
+   <footer>
+    <span id="IDfooterTtl">Contact</span>
+    <div id="IDfooterbx">
+        <div class="left">
+            <span class="pad0"><b class="pad0">Nama</b><br> Kalian dapat menghubungi saya melalui link sosial media berikut</span>
+        </div>
+        <div class="left">
+            <span id="IDsosmed" class="pad0"><span >logo</span>LinkedIn<br><span>logo</span>Instagram<br><span>logo</span>Twitter<br><span>logo</span>Facebook</span>
+        </div>
+    </div>
+    </footer>
+
+<!-- 
+    Hello World
+
+   <div id="yogi">Aku disini</div>
+   <div id="uk">duduk di lantai sejuk</div> -->
+</body>
+
+<style>
+    *{
+        text-align: center;
+        justify-content: center;
+        /* margin:auto; */
+        padding:7px;
+    }
+    #IDfooterTtl{
+        padding: 7px;
+    }
+    footer >div >span,
+    #IDsosmed >span{
+        border: solid 1px black;
+        border-radius: 50%;
+        padding: 10px 7px;
+        color: green;
+        font-size: 10px;
+        line-height: 35px;
+    }
+    .border,
+    #IDskillbx >div >div >div,
+    #IDprojectbx >div >div,
+    footer,
+    #IDfooterbx{
+        border: 1px blue solid;
+        border-collapse: collapse;
+    }
+    .skillbx{
+       /* width: 100%; */
+       /* margin:0; */
+       display:grid;
+       grid-template-columns:1fr 1fr 1fr;
+       color: blue;
+    }
+    .grid, #IDskillbx >div >div{
+        display:grid;
+        grid-template-columns: 33.333% 66.666%;
+        /* color: blue; */
+    }
+
+    #IDprojectbx >div >div{
+        display: grid;
+        grid-template-rows: 1fr 1fr;
+    }
+    #IDprojectbx >div{
+        display:grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+    #IDfooterbx{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        margin-top: 10px;
+    }
+
+    .per100{
+        width: 100%;
+    }
+    .perenam{
+        width: 66%;
+    }
+    .pertiga{
+        width: 33%;
+    }
+    .pad0{
+        padding: 0;
+        margin:0;
+        border: none;
+    }
+    .center{
+        display:flex;
+        text-align: center;
+        justify-content: center;
+     
+        vertical-align: 50%;
+    }
+    .left{
+        text-align: justify;
+    }
+
+    /* #uk{
+        color: darkgreen;text-align: center; margin: 200px;border: blue 2px
+    } */
+</style>
+</html>
