@@ -1,0 +1,12 @@
+[
+    {
+        "id":0,
+        "gambar":"suit.png",
+        "keterangan":"Formal Rapih"
+    },
+    {
+        "id":1,
+        "gambar":"icon-home.gif",
+        "keterangan":"Outline Rumah"
+    }
+]
