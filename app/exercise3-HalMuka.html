@@ -82,10 +82,17 @@ rel="stylesheet"/>
 </body>
 
 <script>
-    const vBtnTbGambar =document.getElementById('IDBtnTbGambar')
+    const vBtnTbGambar =document.getElementById('IDBtnTbGambar');
+    const vAccessToken = localStorage.getItem("access_token");
+    if (!vAccessToken) {
+        window.location.href = "/LogMasuk";
+    };
+    console.log("Hei");
+
     vBtnTbGambar.addEventListener('click',(e)=>{
         e.preventDefault();
-        console.log('Hai');
+        vBtnTbGambar.innerText="Ahoy";
+        //console.log("Hai");
     })
     
     const vDivGal = document.getElementById("IDDivGal");

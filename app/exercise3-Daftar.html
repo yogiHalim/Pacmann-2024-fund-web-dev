@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registration</title>
+
+    <!-- CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-success">
+    <section class="container bg-white w-50 rounded-2 p-5 mt-5">
+      <h3 class="text-center">Registration Page</h3>
+
+      <form>
+        <div class="mb-3">
+          <label for="fullname" class="form-label">Nama Lengkap</label>
+          <input type="text" class="form-control" id="txt-Nama" />
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email address</label>
+          <input type="email" class="form-control" id="txt-Surel" />
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" class="form-control" id="txt-Kodepas" />
+        </div>
+        <div class="mb-3">
+          <label for="confirm-password" class="form-label">Password</label>
+          <input type="password" class="form-control" id="txt-Kodepas2" />
+        </div>
+        <button id="btn-Daftar" class="btn btn-primary w-100">
+          Register
+        </button>
+      </form>
+    </section>
+
+    <!-- Script -->
+    <script>
+        const vBtnDaftar = document.getElementById("btn-Daftar");
+        const vXHR= new XMLHttpRequest();
+        const vURL= "https://glowing-fiesta-jjjx4qxr47jq35jjj-5000.app.github.dev/Daftar";
+        vBtnDaftar.addEventListener("click",(e)=>{
+            e.preventDefault();
+            const vfSurel = document.getElementById("txt-Surel").value;
+            const vfNama = document.getElementById("txt-Nama").value;
+            const vfKodepas = document.getElementById("txt-Kodepas").value;
+            const vfKodepas2 = document.getElementById("txt-Kodepas2").value;
+            if (!vfSurel || !vfNama || !vfKodepas || !vfKodepas2) {
+              alert("isi alamar surat elektronik (email), nama, kodepas, dan konfirmasi kodepas");
+              return;
+            }
+            if (vfKodepas!==vfKodepas2){
+              alert("konfirmasi kodepas tidak sama");
+              return;
+            }
+            const vBody=JSON.stringify({
+              sNama:vfNama,
+              sSurel:vfSurel,
+              sKodepas:vfKodepas,
+            });
+            vXHR.onreadystatechange=function(){
+              if (this.readyState === 4 && this.status === 201){
+                window.location.href="/LogMasuk";
+              }
+            };
+          vXHR.open("POST",vURL,true);
+          vXHR.setRequestHeader("Content-Type","application/json;charset=UTF-8");
+          vXHR.send(vBody);
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- <script src="{{url_for('static', filename='js/script-registration.js')}}"></script> -->
+  </body>
+</html>
