@@ -61,8 +61,8 @@ rel="stylesheet"/>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <button id="IDBtnSimpanBaru" type="button" class="btn btn-primary">Simpan Gambar Baru</button>
+                    <button id="IDBtnTutup" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button id="IDBtnSimpanBaru" type="button" class="btn btn-primary" >Simpan Gambar Baru</button>
                 </div>
             </div>
         </div>
@@ -86,7 +86,6 @@ rel="stylesheet"/>
     vBtnTbGambar.addEventListener('click',(e)=>{
         e.preventDefault();
         console.log('Hai');
-        vModalEditBtn.textContent="Simpan Gambar Baru";
     })
     
     const vDivGal = document.getElementById("IDDivGal");
@@ -95,6 +94,7 @@ rel="stylesheet"/>
     let i=0;
     const vModalEditJudul = document.getElementById("IDModalJudul");
     const vModalEditBtn =document.getElementById("IDBtnSimpanBaru");
+    const vModalBtnTutup =document.getElementById("IDBtnTutup");
     const vModalEditURL =document.getElementById("IDTxbLokGambar");
     const vModalEditKet =document.getElementById("IDTxbKeterangan");
     console.log(vModalEditBtn.textContent);
@@ -118,108 +118,117 @@ rel="stylesheet"/>
                 else{
                     vJsonGambar=JSON.parse(vStringData);
                 }
-                
-                for (let i=0; i<vJsonGambar.length;i++){
-                    console.log(vJsonGambar.length);
-                    const vDivGallery = document.createElement("div");
-                    
-                        const vDivGambar = document.createElement("img");
-                        vDivGambar.setAttribute("src",vJsonGambar[i].gambar);
+                function loadGallery() {
+                    for (let i=0; i<vJsonGambar.length;i++){
+                        console.log(vJsonGambar.length);
+                        const vDivGallery = document.createElement("div");
+                        
+                            const vDivGambar = document.createElement("img");
+                            vDivGambar.setAttribute("src",vJsonGambar[i].gambar);
 
-                        const vDivKeterangan = document.createElement("div");
-                        vDivKeterangan.innerHTML=vJsonGambar[i].keterangan;
+                            const vDivKeterangan = document.createElement("div");
+                            vDivKeterangan.innerHTML=vJsonGambar[i].keterangan;
 
-                        const vBtnDelete = document.createElement("button");
-                        vBtnDelete.innerHTML="Hapus";
-                        vBtnDelete.setAttribute("id","IDBtnDelete"+i)
-                        vBtnDelete.setAttribute("class","Btn bg-danger");
-                        vBtnDelete.addEventListener("click",(event)=>{
-                            event.preventDefault();
-                            vJsonGambar.splice(i,1);
-                            localStorage.setItem("fGambar",JSON.stringify(vJsonGambar));
-                            window.location.reload();
-                        })
-
-                        const vBtnEdit = document.createElement("button");
-                        vBtnEdit.innerHTML="Ubah"; //kasih nama button
-                        vBtnEdit.setAttribute("id","IDBtnUbah"+i);
-                        vBtnEdit.setAttribute("class","Btn");
-                        vBtnEdit.setAttribute("data-bs-toggle","modal");
-                        //vBtnEdit.setAttribute("data-bs-target","#Modal-Edit");
-                        vBtnEdit.setAttribute("data-bs-target","#IDModalTbGambar");
-                        //vBtnEditID="IDBtnUbah"+i;
-                        //const vModalEdit = document.getElementById("IDBtnUbah1");
-                        vBtnEdit.addEventListener("click",(event)=>{
-                            
-                            vModalEditJudul.textContent="Ubah Gambar dan Keterangan";
-                            vModalEditBtn.textContent="Simpan Ubahan";
-                            vModalEditURL.value=vJsonGambar[i].gambar;
-                            vModalEditKet.value=vJsonGambar[i].keterangan;
-                                                        
-                            console.log(i);
-                            vBtnSimpanBaru.addEventListener("click",(event)=>{
+                            const vBtnDelete = document.createElement("button");
+                            vBtnDelete.innerHTML="Hapus";
+                            vBtnDelete.setAttribute("id","IDBtnDelete"+i)
+                            vBtnDelete.setAttribute("class","Btn bg-danger");
+                            vBtnDelete.addEventListener("click",(event)=>{
                                 event.preventDefault();
-                                if(vModalEditBtn.textContent=="Simpan Ubahan"){
-                                    console.log(i);
-                                    vJsonGambar[i].gambar=vModalEditURL.value;
-                                    vJsonGambar[i].keterangan=vModalEditKet.value;
-                                    localStorage.setItem("fGambar",JSON.stringify(vJsonGambar));
-                                    console.log(vJsonGambar[i]);
-                                    //^^^tiga barius kode ini di tombol simpan edit
-                                    //if tombol simpan text = baru then simpan +baru
-                                    //if tombol simpan text = edit then simpan edit
-                                
-                                    vModalEditBtn.textContent="Simpan Gambar Baru";
-                                    window.location.reload();
-                                }
+                                vJsonGambar.splice(i,1);
+                                localStorage.setItem("fGambar",JSON.stringify(vJsonGambar));
+                                window.location.reload();
                             })
-                            // console.log(vModalEdit);
-                            // console.log(vBtnEdit.id);
-                            // console.log(vBtnEditID);
 
-                        })
-                        //vModalEdit.addEventListener("show.bs.modal",(event)=>{
-                            //const vGbrLama = document.getElementById("");
-                            //const vTitle
-                        //})
-    
+                            const vBtnEdit = document.createElement("button");
+                            vBtnEdit.innerHTML="Ubah"; //kasih nama button
+                            vBtnEdit.setAttribute("id","IDBtnUbah"+i);
+                            vBtnEdit.setAttribute("class","Btn");
+                            vBtnEdit.setAttribute("data-bs-toggle","modal");
+                            //vBtnEdit.setAttribute("data-bs-target","#Modal-Edit");
+                            vBtnEdit.setAttribute("data-bs-target","#IDModalTbGambar");
+                            //vBtnEditID="IDBtnUbah"+i;
+                            //const vModalEdit = document.getElementById("IDBtnUbah1");
+                            vBtnEdit.addEventListener("click",(event)=>{
+                                
+                                vModalEditJudul.textContent="Ubah Gambar dan Keterangan";
+                                vModalEditBtn.textContent="Simpan Ubahan";
+                                vModalEditURL.value=vJsonGambar[i].gambar;
+                                vModalEditKet.value=vJsonGambar[i].keterangan;
+                                                            
+                                console.log(i);
+                                // console.log(vModalEdit);
+                                // console.log(vBtnEdit.id);
+                                // console.log(vBtnEditID);
+
+                            })
+                            
+                            //})
+        
 
 
 
-                   vDivGallery.appendChild(vDivGambar);
-                   vDivGallery.appendChild(vDivKeterangan);
-                   vDivGallery.appendChild(vBtnDelete);
-                   vDivGallery.appendChild(vBtnEdit);
+                    vDivGallery.appendChild(vDivGambar);
+                    vDivGallery.appendChild(vDivKeterangan);
+                    vDivGallery.appendChild(vBtnDelete);
+                    vDivGallery.appendChild(vBtnEdit);
 
-                   vDivGal.appendChild(vDivGallery);
+                    vDivGal.appendChild(vDivGallery);
 
+                    }
                 }
-            
+                x= loadGallery();
 
                 vBtnSimpanBaru.addEventListener("click",(event)=>{
-                event.preventDefault();
+                //event.preventDefault();
                                 
                 if (vModalEditBtn.textContent=="Simpan Gambar Baru"){
                     console.log("oioooo");
-                const vTbhGambar = document.getElementById("IDTxbLokGambar").value;
-                const vTbhKeterangan = document.getElementById("IDTxbKeterangan").value;
-                console.log(vTbhGambar);
-                const vStringData = localStorage.getItem("fGambar");
-                const vJsonGambar = JSON.parse(vStringData);
+                    const vTbhGambar = document.getElementById("IDTxbLokGambar").value;
+                    const vTbhKeterangan = document.getElementById("IDTxbKeterangan").value;
+                    console.log(vTbhGambar);
+                    const vStringData = localStorage.getItem("fGambar");
+                    const vJsonGambar = JSON.parse(vStringData);
 
-                console.log(vJsonGambar);
+                    console.log(vJsonGambar);
 
-                vJsonGambar.push({
-                    id:vJsonGambar.length,
-                    gambar: vTbhGambar,
-                    keterangan: vTbhKeterangan,
-                })
-                localStorage.setItem("fGambar",JSON.stringify(vJsonGambar));
+                    vJsonGambar.push({
+                        id:vJsonGambar.length,
+                        gambar: vTbhGambar,
+                        keterangan: vTbhKeterangan,
+                    })
+                    localStorage.setItem("fGambar",JSON.stringify(vJsonGambar));
                 } 
-               
+                else if(vModalEditBtn.textContent=="Simpan Ubahan"){
+                    
+                    //console.log(vEditid);
+                    console.log(i);
+                    i=vEditid
+                    console.log(i);
+                    const vDataString = localStorage.getItem("data");
+                    const vData = JSON.parse(vDataString);
+                    //const vDataDisorot = vData.find((vItem) => vItem.id === Number(vEditid));                    
+                    //const i = Number(vDataDisorot.id);
+                    vJsonGambar[i].gambar=vModalEditURL.value;
+                    vJsonGambar[i].keterangan=vModalEditKet.value;
+                    localStorage.setItem("fGambar",JSON.stringify(vJsonGambar));
+                    console.log(vJsonGambar[i]);
+                    //^^^tiga barius kode ini di tombol simpan edit
+                    //if tombol simpan text = baru then simpan +baru
+                    //if tombol simpan text = edit then simpan edit
+                    vModalBtnTutup.textContent="Tutup";
+                    
+
+            
+                }
                 console.log(vJsonGambar);
+                console.log(localStorage);
                 
-                window.location.reload();
+                while(vDivGal.firstChild){
+                    vDivGal.firstChild.remove()
+                }
+                x=loadGallery();
+                //window.location.reload(); 
         
                 })
             }
@@ -227,18 +236,26 @@ rel="stylesheet"/>
         
         vXHR.open("Get",vURL,true);
         vXHR.send();
-    } 
+    }
+    const vModalEdit = document.getElementById("IDModalTbGambar");
+    vModalEdit.addEventListener("show.bs.modal",(event)=>{        
+        //const vTitleLama = document.getElementById("IDTxbLokGambar");
+        const vEditBtnid = event.relatedTarget["id"];
+        vEditid = vEditBtnid.substring(9);
+        //console.log(vEditid,vTitleLama);
+                            //const vGbrLama = document.getElementById("");
+                            //const vTitle
+    })
+    vModalEdit.addEventListener("hide.bs.modal",(event)=>{
+        vModalEditBtn.textContent="Simpan Gambar Baru";
+        vModalBtnTutup.textContent="Batal";
+    })
 
     const cl=document.getElementById("IDTxbKeterangan");
     cl.addEventListener("click",(event)=>{
         const vTbhGambar = document.getElementById("IDTxbLokGambar");
-        console.log(vTbhGambar);
+        //console.log(vTbhGambar);
     })
-    // bug
-    //1. setelah klik button ubah, muncul modal ubah, 
-    //jika klik di luar modal lalu klik ubah di gambar lain dengan id lain --> id tetap di id gambar pertama
-    //2. jelek kalau tiap simpan ubah harus reload semua window. 
-    //Gimana reload yang diubah doang. --> Tiap simpan return supaya tidak loop.
 
        
     
