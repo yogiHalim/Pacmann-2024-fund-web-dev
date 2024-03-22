@@ -86,6 +86,7 @@ rel="stylesheet"/>
     vBtnTbGambar.addEventListener('click',(e)=>{
         e.preventDefault();
         console.log('Hai');
+        vModalEditBtn.textContent="Simpan Gambar Baru";
     })
     
     const vDivGal = document.getElementById("IDDivGal");
@@ -156,6 +157,22 @@ rel="stylesheet"/>
                             vModalEditKet.value=vJsonGambar[i].keterangan;
                                                         
                             console.log(i);
+                            vBtnSimpanBaru.addEventListener("click",(event)=>{
+                                event.preventDefault();
+                                if(vModalEditBtn.textContent=="Simpan Ubahan"){
+                                    console.log(i);
+                                    vJsonGambar[i].gambar=vModalEditURL.value;
+                                    vJsonGambar[i].keterangan=vModalEditKet.value;
+                                    localStorage.setItem("fGambar",JSON.stringify(vJsonGambar));
+                                    console.log(vJsonGambar[i]);
+                                    //^^^tiga barius kode ini di tombol simpan edit
+                                    //if tombol simpan text = baru then simpan +baru
+                                    //if tombol simpan text = edit then simpan edit
+                                
+                                    vModalEditBtn.textContent="Simpan Gambar Baru";
+                                    window.location.reload();
+                                }
+                            })
                             // console.log(vModalEdit);
                             // console.log(vBtnEdit.id);
                             // console.log(vBtnEditID);
@@ -199,20 +216,7 @@ rel="stylesheet"/>
                 })
                 localStorage.setItem("fGambar",JSON.stringify(vJsonGambar));
                 } 
-                else if(vModalEditBtn.textContent=="Simpan Ubahan"){
-                    
-                    vJsonGambar[i].gambar=vModalEditURL.value;
-                    vJsonGambar[i].keterangan=vModalEditKet.value;
-                    localStorage.setItem("fGambar",JSON.stringify(vJsonGambar));
-                    console.log(vJsonGambar[i]);
-                    //^^^tiga barius kode ini di tombol simpan edit
-                    //if tombol simpan text = baru then simpan +baru
-                    //if tombol simpan text = edit then simpan edit
-                
-                    vModalEditBtn.textContent="Simpan Gambar Baru";
-
-            
-                }
+               
                 console.log(vJsonGambar);
                 
                 window.location.reload();
@@ -230,6 +234,11 @@ rel="stylesheet"/>
         const vTbhGambar = document.getElementById("IDTxbLokGambar");
         console.log(vTbhGambar);
     })
+    // bug
+    //1. setelah klik button ubah, muncul modal ubah, 
+    //jika klik di luar modal lalu klik ubah di gambar lain dengan id lain --> id tetap di id gambar pertama
+    //2. jelek kalau tiap simpan ubah harus reload semua window. 
+    //Gimana reload yang diubah doang. --> Tiap simpan return supaya tidak loop.
 
        
     
@@ -239,7 +248,7 @@ rel="stylesheet"/>
 
 <style>
 #IDDivGal >div >div{
-    height: 24px;
+    height: 24px; 
     /* color: #198754; */
 }
 .Btn{
