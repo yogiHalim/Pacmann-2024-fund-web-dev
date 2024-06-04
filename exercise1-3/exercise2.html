@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercise 2</title>
+    <link
+href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+<nav id="IDatas" class="flex">
+    <ul><li>Navbar</li><li><img src=icon-home.gif class="icon">Home</li></ul>
+</nav>
+
+<section class="text-center">
+    <div> <img src="suit-256px.png"> </div>
+    <p class="w-5 txjust ctr"><b>I am yogi,</b> <br> a casual Lorem ipsum dolor sit amet consectetur, adipisicing elit. Veritatis perspiciatis sunt ipsum totam harum velit doloribus amet odit tempore aspernatur magnam et, corporis quas non accusamus iste nemo omnis eum?
+    </p>  
+</section>
+<section class="text-center mt-5">
+    <button 
+        id="IDBtnTbGambar" 
+        class="btn btn-primary mt-3"
+        data-bs-toggle='modal'
+        data-bs-target="#IDModalTbGambar"
+        >
+    + Tambah Gambar
+    </button> 
+    <div 
+        id="IDModalTbGambar"
+        class="modal fade"
+        >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 id="IDModalJudul" class="modal-title fs-5">Tambah Gambar</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body txjust">
+                    <div class="mb-3">
+                        <label for="IDTxbLokGambar" class="form-label">URL Lokasi Gambar</label>
+                        <input
+                            id="IDTxbLokGambar"
+                            type="text"
+                            class="form-control"
+                            placeholder="Masukkan URL gambar disini"
+                            required
+                        />
+                    </div>
+                    <div class="mb-3">
+                        <label for="IDTxbKeterangan" class="form-label">Keterangan Gambar</label>
+                        <input
+                            id="IDTxbKeterangan"
+                            type="text"
+                            class="form-control"
+                            placeholder="Masukkan Keterangan Singkat"
+                            required
+                        />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button id="IDBtnSimpanBaru" type="button" class="btn btn-primary">Simpan Gambar Baru</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <br><b>Gallery</b>
+    <div id="IDDivGal" class="divGal">
+
+    </div>
+</section>
+<footer>
+    <div><b>Contact</b><br>+62 811 xxxx xxx</div>
+    <div><b>About Me</b><br>Casual coder<br>Small-Medium Business Enabler</div>
+    <div><b>Other</b><br>Web Portolio<br>Web Calculator</div>
+</footer>
+</body>
+
+<script>
+    const vBtnTbGambar =document.getElementById('IDBtnTbGambar')
+    vBtnTbGambar.addEventListener('click',(e)=>{
+        e.preventDefault();
+        console.log('Hai');
+        vModalEditBtn.textContent="Simpan Gambar Baru";
+    })
+    
+    const vDivGal = document.getElementById("IDDivGal");
+    const vBtnSimpanBaru = document.getElementById("IDBtnSimpanBaru");
+    
+    let i=0;
+    const vModalEditJudul = document.getElementById("IDModalJudul");
+    const vModalEditBtn =document.getElementById("IDBtnSimpanBaru");
+    const vModalEditURL =document.getElementById("IDTxbLokGambar");
+    const vModalEditKet =document.getElementById("IDTxbKeterangan");
+    console.log(vModalEditBtn.textContent);
+    window.onload=()=>{
+        console.log('Hello Gallery');
+        const vXHR = new XMLHttpRequest();
+        const vURL = "exercise2.JSON" 
+
+        vXHR.onreadystatechange = function(){
+        
+            if(this.readyState==4&&this.status==200){
+                let vStringData = localStorage.getItem("fGambar"); //walau nama file .JSON tapi masih disimpan dalam bentuk string
+                console.log(vStringData);
+                let vJsonGambar = vStringData;
+                console.log(vJsonGambar);
+                if(vJsonGambar=='[]'||vJsonGambar==null){
+                    vJsonGambar=this.response;
+                    localStorage.setItem("fGambar",vJsonGambar);
+                    vJsonGambar=JSON.parse(this.response);
+                }
+                else{
+                    vJsonGambar=JSON.parse(vStringData);
+                }
+                
+                for (let i=0; i<vJsonGambar.length;i++){
+                    console.log(vJsonGambar.length);
+                    const vDivGallery = document.createElement("div");
+                    
+                        const vDivGambar = document.createElement("img");
+                        vDivGambar.setAttribute("src",vJsonGambar[i].gambar);
+
+                        const vDivKeterangan = document.createElement("div");
+                        vDivKeterangan.innerHTML=vJsonGambar[i].keterangan;
+
+                        const vBtnDelete = document.createElement("button");
+                        vBtnDelete.innerHTML="Hapus";
+                        vBtnDelete.setAttribute("id","IDBtnDelete"+i)
+                        vBtnDelete.setAttribute("class","Btn bg-danger");
+                        vBtnDelete.addEventListener("click",(event)=>{
+                            event.preventDefault();
+                            vJsonGambar.splice(i,1);
+                            localStorage.setItem("fGambar",JSON.stringify(vJsonGambar));
+                            window.location.reload();
+                        })
+
+                        const vBtnEdit = document.createElement("button");
+                        vBtnEdit.innerHTML="Ubah"; //kasih nama button
+                        vBtnEdit.setAttribute("id","IDBtnUbah"+i);
+                        vBtnEdit.setAttribute("class","Btn");
+                        vBtnEdit.setAttribute("data-bs-toggle","modal");
+                        //vBtnEdit.setAttribute("data-bs-target","#Modal-Edit");
+                        vBtnEdit.setAttribute("data-bs-target","#IDModalTbGambar");
+                        //vBtnEditID="IDBtnUbah"+i;
+                        //const vModalEdit = document.getElementById("IDBtnUbah1");
+                        vBtnEdit.addEventListener("click",(event)=>{
+                            
+                            vModalEditJudul.textContent="Ubah Gambar dan Keterangan";
+                            vModalEditBtn.textContent="Simpan Ubahan";
+                            vModalEditURL.value=vJsonGambar[i].gambar;
+                            vModalEditKet.value=vJsonGambar[i].keterangan;
+                                                        
+                            console.log(i);
+                            // console.log(vModalEdit);
+                            // console.log(vBtnEdit.id);
+                            // console.log(vBtnEditID);
+
+                        })
+                        //vModalEdit.addEventListener("show.bs.modal",(event)=>{
+                            //const vGbrLama = document.getElementById("");
+                            //const vTitle
+                        //})
+    
+
+
+
+                   vDivGallery.appendChild(vDivGambar);
+                   vDivGallery.appendChild(vDivKeterangan);
+                   vDivGallery.appendChild(vBtnDelete);
+                   vDivGallery.appendChild(vBtnEdit);
+
+                   vDivGal.appendChild(vDivGallery);
+
+                }
+            
+
+                vBtnSimpanBaru.addEventListener("click",(event)=>{
+                event.preventDefault();
+                                
+                if (vModalEditBtn.textContent=="Simpan Gambar Baru"){
+                    console.log("oioooo");
+                const vTbhGambar = document.getElementById("IDTxbLokGambar").value;
+                const vTbhKeterangan = document.getElementById("IDTxbKeterangan").value;
+                console.log(vTbhGambar);
+                const vStringData = localStorage.getItem("fGambar");
+                const vJsonGambar = JSON.parse(vStringData);
+
+                console.log(vJsonGambar);
+
+                vJsonGambar.push({
+                    id:vJsonGambar.length,
+                    gambar: vTbhGambar,
+                    keterangan: vTbhKeterangan,
+                })
+                localStorage.setItem("fGambar",JSON.stringify(vJsonGambar));
+                } 
+                else if(vModalEditBtn.textContent=="Simpan Ubahan"){
+                    
+                    vJsonGambar[i].gambar=vModalEditURL.value;
+                    vJsonGambar[i].keterangan=vModalEditKet.value;
+                    localStorage.setItem("fGambar",JSON.stringify(vJsonGambar));
+                    console.log(vJsonGambar[i]);
+                    //^^^tiga barius kode ini di tombol simpan edit
+                    //if tombol simpan text = baru then simpan +baru
+                    //if tombol simpan text = edit then simpan edit
+                
+                    vModalEditBtn.textContent="Simpan Gambar Baru";
+
+            
+                }
+                console.log(vJsonGambar);
+                
+                window.location.reload();
+        
+                })
+            }
+        }
+        
+        vXHR.open("Get",vURL,true);
+        vXHR.send();
+    } 
+
+    const cl=document.getElementById("IDTxbKeterangan");
+    cl.addEventListener("click",(event)=>{
+        const vTbhGambar = document.getElementById("IDTxbLokGambar");
+        console.log(vTbhGambar);
+    })
+
+       
+    
+    a=document.getElementById('IDatas').clientWidth;
+    console.log(a)
+</script>
+
+<style>
+#IDDivGal >div >div{
+    height: 24px;
+    /* color: #198754; */
+}
+.Btn{
+    margin:auto;
+    font-size: x-small;
+    text-align: center;
+    width: 40%;
+    height: auto;
+    border-radius: 20%;
+    background-color: aqua;
+}
+.divGal{
+    width: 80%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin:auto;
+}
+.w-5{
+    width:50%;
+}
+.txjust{
+    text-align: justify;
+}
+.ctr{
+    margin: auto;
+}
+img{
+    margin: 0 35%;
+    padding: 0px;
+    border: 0px;
+    width: 25%;
+    border-radius: 70%;
+    
+}
+#IDatas,
+footer{
+    background-color: #198754;
+    color: aliceblue;
+}
+footer{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    justify-content: space-between;
+    padding: 2px 10px;
+    text-align: center;
+    font-size: small;
+}
+/* footer >div:nth-child(3){
+    position: absolute;
+    right:10px;
+    color: blueviolet;
+} */
+.flex{
+    display: flex;
+}
+.flex >ul{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 14px;
+    gap:16px;
+    list-style: none;
+}
+.icon{
+    width: 15px;
+    height: 15px;
+    margin: 0 2px;
+}
+</style>
+   
+</html>
