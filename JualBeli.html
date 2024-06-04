@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entry Jual dan Entry Beli</title>
+</head>
+<body>
+<section id="JualBeli">
+        <h1> Halaman masuk</h1>
+        <div style="background-color: #f2f2f2c5; width:75mm;height:160mm; padding-top:80px; margin-left:1mm">
+        <form>
+            <button type="button" id="klikJualBeli" class="klik teks" style="background-color: #acffb5a9;color:#5d009b; margin-bottom:20px">Saat Ini Mencatat Jual</button>
+                <label>Nama Barang Terjual</label>
+                <input type="text" placeholder="Nama Barang Terjual" id="isiNamaBarang" class="teks"/>
+                <!-- <input type="text" id="isiNamaBarang" onkeyup="showHint(this.value)"/> -->
+                <!-- https://www.w3schools.com/xml/xml_http.asp -->
+                <label>Jumlah</label>
+                <input type="text" placeholder="Jumlah Dijual" id="isiJumlah" class="teks"/>
+            <button type="submit" id="klikCatat"> Catat. </button>
+            <!-- <button type="submit" onclick="catat()" id="klikCatat"> Catat. </button> -->
+        </form>
+        </div>
+    </section>
+</body>
+<script>
+    const vIsiNamaBarang = document.getElementById('isiNamaBarang');
+    const vIsiJumlah = document.getElementById('isiJumlah');
+
+    window.onload=()=>{
+        console.log('script onload');
+        const vXHR = new XMLHttpRequest();
+        const vURL = "bulanan.txt";
+        const uURL2 = "bulanan.json";
+        let vData = 0;
+        vXHR.onreadystatechange=function(){
+            if (this.readyState === 4 && this.status ===200) {
+            vData = JSON.parse(this.responseText);
+            vIsiNamaBarang.placeholder=vData[0].nama;
+            vIsiJumlah.placeholder=vData[1].nama;
+            }
+        }
+        
+        vXHR.open("GET",vURL,true);
+        vXHR.send();
+
+        const vKlikCatat=document.getElementById('klikCatat');
+        vKlikCatat.addEventListener('click',(e)=>{
+            e.preventDefault();
+            console.log('Hai');
+            // console.log(vData.nama);
+            vSimpan=1;
+           
+
+        })
+
+        
+    }
+    // function catat(){
+    //     console.log('Hai2');
+    // }
+</script>
+<style>
+    *{
+        height:40px;
+        width:155px;
+        font-size: 14px;
+        color: #5d009b;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+    .teks{
+        padding-left:10px;
+        /* background-image: url('searchicon.png'); */
+    }
+    .klik{
+        height:40px;
+        width:175px;
+        font-size: 14px;
+        font-weight:700;
+        border: #02130b;
+    }
+    .klikJual{
+    border-bottom: #34d044;
+    }
+    .klikBeli{
+    border-bottom: #34d044;
+    }
+
+    button[type="submit"]{
+        margin-top:10px;
+        border:chartreuse;
+        width:74mm;
+    }
+    button[type="submit"]:hover {
+    background-color: #640a85;
+    font-weight: bolder;
+    }
+    button[type="submit"]:active {
+    background-color: #45a049;
+    font-weight: bolder;
+    }
+    
+
+    input[type=text], select {
+    width:74mm;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-bottom: #34d044;
+    border-radius: 4px;
+    /* font-weight: bolder; */
+    }
+    input[type=text]:focus {
+    background-color: rgba(32, 178, 112, 0.131); /*bisa color bisa border weight */
+    /* https://www.w3schools.com/css/css_form.asp */
+    }
+</style>
+</html>
